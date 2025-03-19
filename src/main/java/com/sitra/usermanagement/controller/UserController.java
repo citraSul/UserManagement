@@ -121,6 +121,15 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable String userId) {
+        LOGGER.info("Fetching user by ID: {}", userId);
 
+        UserResponseDTO user = userService.getUser(userId);
+
+        LOGGER.info("Retrieved {} user by userID: {}", user, userId);
+
+        return ResponseEntity.ok(user);
+    }
 
 }

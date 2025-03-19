@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -180,6 +181,19 @@ public class UserControllerTest {
 
                         .with(csrf()))
 
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error", is("Not Found")));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"}) // Mock authentication to bypass security
+    void shouldReturnNotFound_WhenAssigningSupervisorToNonExistingUser1() throws Exception {
+        when(userService.updateSupervisor("U999", "U456"))
+                .thenThrow(new UserNotFoundException("User not found"));
+
+        mockMvc.perform(patch("/api/users/U999/supervisor/U456")
+                        .with(csrf().asHeader())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error", is("Not Found")));
     }

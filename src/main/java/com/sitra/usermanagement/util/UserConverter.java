@@ -40,7 +40,7 @@ public class UserConverter {
         user.setLastName(dto.getLastName());
         user.setEmailAddress(dto.getEmailAddress());
         //user.setSupervisor(supervisor);
-        user.setSupervisorUserId(dto.getSupervisorUserId());
+       user.setSupervisorUserId(dto.getSupervisorUserId());
         user.setTitleText(dto.getTitleText());
 
         if (dto.getAddresses() != null) {
@@ -74,9 +74,9 @@ public class UserConverter {
         dto.setEmailAddress(user.getEmailAddress());
         dto.setSupervisorUserId(user.getSupervisorUserId());
         dto.setTitleText(user.getTitleText());
-        dto.setCreateUserId(user.getCreateUserId() != null ? user.getCreateUserId().longValue() : null);
+        dto.setCreateUserId(user.getCreateUserId() != null ? user.getCreateUserId() : null);
         dto.setCreateDttm(user.getCreateDttm());
-        dto.setUpdateUserId(user.getUpdateUserId() != null ? user.getUpdateUserId().longValue() : null);
+        dto.setUpdateUserId(user.getUpdateUserId() != null ? user.getUpdateUserId() : null);
         dto.setUpdateDttm(user.getUpdateDttm());
 
         // Convert Addresses List

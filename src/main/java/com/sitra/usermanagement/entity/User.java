@@ -48,13 +48,13 @@ public class User {
     private List<Address> addresses;
     @CreatedBy
     @Column(name = "create_user_id", nullable = false,updatable = false)
-    private Integer createUserId;
-     @CreatedDate
+    private String createUserId;
+    @CreatedDate
     @Column(name = "create_dttm", nullable = false, updatable = false)
     private LocalDateTime createDttm = LocalDateTime.now();
     @LastModifiedBy
     @Column(name = "update_user_id", nullable = false)
-    private Integer updateUserId;
+    private String updateUserId;
     @LastModifiedDate
     @Column(name = "update_dttm", nullable = false)
     private LocalDateTime updateDttm;
@@ -62,7 +62,10 @@ public class User {
       public  User(){
 
      }
-    public User(Integer id, String userId, String firstName, String lastName, String emailAddress, User supervisor, String supervisorUserId, String titleText, List<Address> addresses, Integer createUserId, LocalDateTime createDttm, Integer updateUserId, LocalDateTime updateDttm) {
+    public User(Integer id, String userId, String firstName, String lastName, String emailAddress,
+                User supervisor,
+                String supervisorUserId,
+                String titleText, List<Address> addresses, String createUserId, LocalDateTime createDttm, String updateUserId, LocalDateTime updateDttm) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
@@ -126,7 +129,7 @@ public class User {
         this.supervisor = supervisor;
     }
 
-    public String getSupervisorUserId() {
+   public String getSupervisorUserId() {
         return supervisorUserId;
     }
 
@@ -150,11 +153,11 @@ public class User {
         this.addresses = addresses;
     }
 
-    public Integer getCreateUserId() {
+    public String getCreateUserId() {
         return createUserId;
     }
 
-    public void setCreateUserId(Integer createUserId) {
+    public void setCreateUserId(String createUserId) {
         this.createUserId = createUserId;
     }
 
@@ -166,11 +169,11 @@ public class User {
         this.createDttm = createDttm;
     }
 
-    public Integer getUpdateUserId() {
+    public String getUpdateUserId() {
         return updateUserId;
     }
 
-    public void setUpdateUserId(Integer updateUserId) {
+    public void setUpdateUserId(String updateUserId) {
         this.updateUserId = updateUserId;
     }
 
@@ -188,11 +191,5 @@ public class User {
     this.updateDttm = LocalDateTime.now();
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.createDttm = LocalDateTime.now();
-        this.updateDttm = LocalDateTime.now();
-        this.createUserId = 1; // Set default or fetch from context
-        this.updateUserId = 1;
-    }
+
 }

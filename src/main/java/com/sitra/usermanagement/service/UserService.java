@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 /**
  * Service class for managing user-related operations.
@@ -52,10 +52,6 @@ public class UserService {
         LOGGER.info("Creating user with email: {}", dto.getEmailAddress());
 
         User user = UserConverter.convertToEntity(dto);
-        user.setCreateUserId(1); // Hardcoded for now, can come from auth context
-        user.setCreateDttm(LocalDateTime.now());
-        user.setUpdateUserId(1);
-        user.setUpdateDttm(LocalDateTime.now());
 
         User savedUser = userRepository.save(user);
         LOGGER.info("User created successfully with ID: {}", savedUser.getUserId());
@@ -86,10 +82,7 @@ public class UserService {
 
         // Preserve existing fields
         updatedUser.setId(existingUser.getId());
-        updatedUser.setCreateUserId(existingUser.getCreateUserId());
-        updatedUser.setCreateDttm(existingUser.getCreateDttm());
-        updatedUser.setUpdateUserId(1); // Update user (can be fetched from security context)
-        updatedUser.setUpdateDttm(LocalDateTime.now());
+
         User savedUser = userRepository.save(updatedUser);
         LOGGER.info("User updated successfully: {}", savedUser.getUserId());
 
@@ -150,8 +143,6 @@ public class UserService {
 
 
         user.setSupervisorUserId(newSupervisorId);
-        user.setUpdateUserId(1); // Hardcoded, replace with logged-in user
-       user.setUpdateDttm(LocalDateTime.now());
 
         User savedUser = userRepository.save(user);
         LOGGER.info("Supervisor updated successfully for user ID: {}", savedUser.getUserId());
@@ -159,4 +150,14 @@ public class UserService {
         return UserConverter.convertToDTO(savedUser);
     }
 
+
+    public UserResponseDTO getUser(String userId) {
+
+    User user  =  userRepository.findByUserId(userId).orElseThrow(() -> {
+            LOGGER.error("User with ID {} not found", userId);
+            return new UserNotFoundException("User with ID " + userId + " not found");
+        });
+
+        return UserConverter.convertToDTO(user);
+    }
 }

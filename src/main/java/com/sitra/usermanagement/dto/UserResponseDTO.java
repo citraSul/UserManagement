@@ -17,14 +17,14 @@ public class UserResponseDTO {
     private String supervisorUserId;
     private String titleText;
     private List<AddressDTO> addresses;
-    private Long createUserId;
+    private String createUserId;
     private LocalDateTime createDttm;
-    private Long updateUserId;
+    private String updateUserId;
     private LocalDateTime updateDttm;
     public UserResponseDTO(){
 
     }
-    public UserResponseDTO(Integer id, String userId, String firstName, String lastName, String emailAddress, String supervisorUserId, String titleText, List<AddressDTO> addresses, Long createUserId, LocalDateTime createDttm, Long updateUserId, LocalDateTime updateDttm) {
+    public UserResponseDTO(Integer id, String userId, String firstName, String lastName, String emailAddress, String supervisorUserId, String titleText, List<AddressDTO> addresses, String createUserId, LocalDateTime createDttm, String updateUserId, LocalDateTime updateDttm) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
@@ -103,11 +103,11 @@ public class UserResponseDTO {
         this.addresses = addresses;
     }
 
-    public Long getCreateUserId() {
+    public String getCreateUserId() {
         return createUserId;
     }
 
-    public void setCreateUserId(Long createUserId) {
+    public void setCreateUserId(String createUserId) {
         this.createUserId = createUserId;
     }
 
@@ -119,11 +119,11 @@ public class UserResponseDTO {
         this.createDttm = createDttm;
     }
 
-    public Long getUpdateUserId() {
+    public String getUpdateUserId() {
         return updateUserId;
     }
 
-    public void setUpdateUserId(Long updateUserId) {
+    public void setUpdateUserId(String updateUserId) {
         this.updateUserId = updateUserId;
     }
 
